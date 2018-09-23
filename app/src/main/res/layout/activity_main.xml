@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnBarTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bar Top" />
+
+        <Button
+            android:id="@+id/btnBarBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bar Bottom" />
+
+        <Button
+            android:id="@+id/btnCircle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Circle" />
+
+        <Button
+            android:id="@+id/btnCircleFull"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Circle Full" />
+
+        <Button
+            android:id="@+id/btnCircleFullTranslucent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Circle Full Translucent" />
+    </LinearLayout>
+
+
+</FrameLayout>
