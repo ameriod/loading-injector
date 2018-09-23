@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import me.ameriod.lib.loading.LoadingType
+import me.ameriod.lib.loading.showLoading
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -19,9 +20,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun show(loadingType: LoadingType) {
-        loadingType.add(rootView)
-        loadingType.show(rootView)
-        rootView.postDelayed({ loadingType.hide(rootView) }, 1000L)
+        showLoading(true, loadingType)
+        rootView.postDelayed({ showLoading(false, loadingType) }, 1000L)
     }
 
     override fun onClick(v: View) {
