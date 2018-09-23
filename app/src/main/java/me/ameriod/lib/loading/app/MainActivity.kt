@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnCircle.setOnClickListener(this)
         btnCircleFull.setOnClickListener(this)
         btnCircleFullTranslucent.setOnClickListener(this)
+        btnBlockingDialog.setOnClickListener(this)
     }
 
     private fun show(loadingType: LoadingType) {
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnCircle -> show(LoadingType.IndeterminateCircle)
             R.id.btnCircleFull -> show(LoadingType.IndeterminateCircleFull)
             R.id.btnCircleFullTranslucent -> show(LoadingType.IndeterminateCircleFullTranslucent)
+            R.id.btnBlockingDialog -> show(LoadingType.BlockingDialog("Loading some stuff..."))
         }
     }
 }

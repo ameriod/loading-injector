@@ -1,5 +1,10 @@
 package me.ameriod.lib.loading
 
+import android.app.Dialog
+import android.app.ProgressDialog
+import android.os.Bundle
+import android.support.v4.app.DialogFragment
+import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -222,6 +227,71 @@ sealed class LoadingType {
 
         private fun getView(container: ViewGroup) =
                 container.findViewById<FrameLayout>(R.id.loading_indeterminate_circle_full_translucent)
+    }
+
+    class BlockingDialog internal constructor(private val textResId: Int,
+                                              private val text: CharSequence?) : LoadingType() {
+
+        constructor(textResId: Int) : this(textResId, null)
+
+        constructor(text: CharSequence) : this(0, text)
+
+        override fun show(container: ViewGroup) {
+            val dialog = getDialogFragment(container)
+            if (dialog?.isAdded != true) showDialog(container)
+
+        }
+
+        override fun hide(container: ViewGroup) {
+            val dialog = getDialogFragment(container)
+            if (dialog?.isAdded == true) dialog.dismissAllowingStateLoss()
+        }
+
+        override fun add(container: ViewGroup) {
+            // no op do not need to add a view
+        }
+
+        private fun getDialogFragment(viewGroup: ViewGroup): ProgressDialogFragment? =
+                getFragmentManager(viewGroup).findFragmentByTag(ProgressDialogFragment.TAG) as ProgressDialogFragment?
+
+        private fun showDialog(viewGroup: ViewGroup) {
+            ProgressDialogFragment.newInstance(textResId, text)
+                    .show(getFragmentManager(viewGroup), ProgressDialogFragment.TAG)
+        }
+
+        private fun getFragmentManager(viewGroup: ViewGroup) =
+                (viewGroup.context as AppCompatActivity).supportFragmentManager
+
+        internal class ProgressDialogFragment : DialogFragment() {
+
+            override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+                    ProgressDialog(context)
+                            .apply {
+                                arguments?.let {
+                                    setMessage(it.getCharSequence(TEXT)
+                                            ?: getText(it.getInt(TEXT)))
+                                }
+                                setCancelable(false)
+                                show()
+                            }
+
+
+            companion object {
+                internal const val TAG = "loading_dialog"
+                private const val TEXT_RES = "extra_text_res"
+                private const val TEXT = "extra_text"
+
+                @JvmStatic
+                internal fun newInstance(textResId: Int,
+                                         text: CharSequence?) =
+                        ProgressDialogFragment().apply {
+                            arguments = Bundle().apply {
+                                putInt(TEXT_RES, textResId)
+                                putCharSequence(TEXT, text)
+                            }
+                        }
+            }
+        }
     }
 
     abstract class Custom() : LoadingType()
