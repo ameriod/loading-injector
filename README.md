@@ -1,4 +1,4 @@
-Loading
+Loading Injector
 =======
 
-Library to inject loading views into a layout
+Android Library to inject loading views into layouts
